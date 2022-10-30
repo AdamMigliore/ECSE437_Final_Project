@@ -1,0 +1,11 @@
+{
+  "name": "ecse437_final_project",
+  "version": "1.0.0",
+  "description": "This is the final project for Antonia Nistor and Adam Di Re for ECSE437 at McGill University in FALL2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
