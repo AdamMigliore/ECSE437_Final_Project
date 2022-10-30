@@ -4,7 +4,7 @@
   "description": "This is the final project for Antonia Nistor and Adam Di Re for ECSE437 at McGill University in FALL2022.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc",
     "clean": "rm -r ./build",
     "cleanbuild": "npm run clean && npm run build",
@@ -13,9 +13,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@jest/globals": "^29.2.2",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.26.0",
+    "jest": "^29.2.2",
+    "ts-jest": "^29.0.3",
     "typescript": "^4.8.4"
   }
 }
