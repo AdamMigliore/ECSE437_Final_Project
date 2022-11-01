@@ -1,6 +1,7 @@
 import express from "express";
 import bp from "body-parser";
 import router from "./routers/router";
+import "express-async-errors";
 
 // Create the express application
 const app = express();
