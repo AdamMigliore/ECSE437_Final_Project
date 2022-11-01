@@ -6,6 +6,9 @@ After Node.js is installed, you can install the necessary dependencies by runnin
 # Build the Project
 In order to build the project, you need to run ```npm run build```. This will create a ```build``` folder where the program can be started.
 
+# Setup the Database Client
+In order to setup the database client, run ```npm run prisma:generate```. You will first need a ```.env``` file which contains the database_url.
+
 # Run the Project
 In order to run the project, you need to run ```npm run start```.
 

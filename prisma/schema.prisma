@@ -1,0 +1,53 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Espresso {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  beansWeight       Float
+  shotTimeInSeconds Float
+  pressure          Float
+  notes             String
+  grindSetting      String
+  machine           Machine  @relation(fields: [machineId], references: [id])
+  grinder           Grinder  @relation(fields: [grinderId], references: [id])
+  beans             Bean     @relation(fields: [beanId], references: [id])
+  machineId         Int
+  grinderId         Int
+  beanId            Int
+}
+
+model Machine {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  brand        String
+  model        String
+  year         String
+  EspressoShot Espresso[]
+}
+
+model Grinder {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  brand        String
+  model        String
+  year         String
+  EspressoShot Espresso[]
+}
+
+model Bean {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  brand        String
+  model        String
+  roast        String
+  EspressoShot Espresso[]
+}
