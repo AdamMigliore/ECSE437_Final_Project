@@ -8,11 +8,7 @@ export default interface CreateEspressoInput {
     pressure: number;
     notes: string;
     grindSetting: string;
-    machine: CreateMachineInput;
-    grinder: CreateGrinderInput;
-    beans: CreateBeanInput;
     machineId: number;
     grinderId: number;
     beanId: number;
-
 }
