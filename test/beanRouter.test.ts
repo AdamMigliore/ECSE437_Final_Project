@@ -13,7 +13,7 @@ const b1: CreateBeanInput = {
 describe("[Integration Test] Bean routes", () => {
     test("GET /:id returns null", async () => {
       // When
-      const res = await supertest(app).get("/bean/1");
+      const res = await supertest(app).get("/bean/-1");
   
       // Then
       expect(res.body).toStrictEqual({});
