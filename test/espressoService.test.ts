@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { jest, describe, expect, test } from "@jest/globals";
 import prisma from "../src/config/prisma";
 import CreateBeanInput from "../src/interfaces/createBeanInput";
 import CreateEspressoInput from "../src/interfaces/createEspressoInput";
@@ -23,6 +23,8 @@ const b1: CreateBeanInput = {
     model: "Gold",
     roast: "Light",
 };
+
+jest.setTimeout(10000);
 
 describe("[Unit Test] Espresso controllers", () => {
     test("getById returns an Espresso", async () => {
