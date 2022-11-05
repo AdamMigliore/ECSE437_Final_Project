@@ -20,13 +20,10 @@ const createBean = async (req: Request, res: Response) => {
 
 const deleteBean = async (req: Request, res: Response) => {
     const { id } = req.params;
-  
     const deletedBean = await BeanService.deleteById(Number(id));
-  
     if (deletedBean == null) {
       return res.status(400);
     }
-  
     return res.send(deletedBean);
 };
 

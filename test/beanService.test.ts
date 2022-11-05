@@ -1,4 +1,4 @@
-import { jest, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import prisma from "../src/config/prisma";
 import CreateBeanInput from "../src/interfaces/createBeanInput";
 import BeanService from "../src/services/beanService";
@@ -8,8 +8,6 @@ const b1: CreateBeanInput = {
     model: "Gold",
     roast: "Light",
 };
-
-jest.setTimeout(10000);
 
 describe("[Unit Test] Bean controllers", () => {
     test("getById returns a Bean", async () => {
