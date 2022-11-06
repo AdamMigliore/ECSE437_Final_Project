@@ -7,116 +7,129 @@ import CreateMachineInput from "../src/interfaces/createMachineInput";
 import EspressoService from "../src/services/espressoService";
 
 const m1: CreateMachineInput = {
-    brand: "Rocket",
-    model: "Appartamento",
-    year: "2022",
+  brand: "Rocket",
+  model: "Appartamento",
+  year: "2022",
 };
 
 const g1: CreateGrinderInput = {
-    brand: "Eureka",
-    model: "Mignon Silenzio",
-    year: "2022",
+  brand: "Eureka",
+  model: "Mignon Silenzio",
+  year: "2022",
 };
 
 const b1: CreateBeanInput = {
-    brand: "Lavazza",
-    model: "Gold",
-    roast: "Light",
+  brand: "Lavazza",
+  model: "Gold",
+  roast: "Light",
 };
 
 jest.setTimeout(10000);
 
 describe("[Unit Test] Espresso controllers", () => {
-    test("getById returns an Espresso", async () => {
-        //  Given
-        const machine1 = await prisma.machine.create({ data: m1 });
-        const grinder1 = await prisma.grinder.create({ data: g1 });
-        const bean1 = await prisma.bean.create({ data: b1 });
-        const e1: CreateEspressoInput = {
-            beansWeight: 10, 
-            shotTimeInSeconds: 5,
-            pressure: 30,
-            notes: "almond milk",
-            grindSetting: "extra grinded",
-            machineId: machine1.id,
-            grinderId: grinder1.id,
-            beanId: bean1.id,
-        };
-        const createdEspresso = await prisma.espresso.create({ data: e1 });
-        const id = createdEspresso.id;
-    
-        // When
-        const foundEspresso = await EspressoService.getById(id);
-    
-        //  Then
-        expect(foundEspresso).toStrictEqual(createdEspresso);
-    
-        //  Cleanup
-        await prisma.espresso.delete({ where: { id } });
-        await prisma.machine.delete({ where: { id : machine1.id } });
-        await prisma.grinder.delete({ where: { id : grinder1.id } });
-        await prisma.bean.delete({ where: { id : bean1.id } });
-      });
+  test("getById returns an Espresso", async () => {
+    //  Given
+    const machine1 = await prisma.machine.create({ data: m1 });
+    const grinder1 = await prisma.grinder.create({ data: g1 });
+    const bean1 = await prisma.bean.create({ data: b1 });
+    const e1: CreateEspressoInput = {
+      beansWeight: 10,
+      shotTimeInSeconds: 5,
+      pressure: 30,
+      notes: "almond milk",
+      grindSetting: "extra grinded",
+      machineId: machine1.id,
+      grinderId: grinder1.id,
+      beanId: bean1.id,
+    };
+    const createdEspresso = await prisma.espresso.create({ data: e1 });
+    const id = createdEspresso.id;
 
-      test("deleteById deletes a Espresso", async () => {
-        //  Given
-        const machine1 = await prisma.machine.create({ data: m1 });
-        const grinder1 = await prisma.grinder.create({ data: g1 });
-        const bean1 = await prisma.bean.create({ data: b1 });
-        const e1: CreateEspressoInput = {
-            beansWeight: 10, 
-            shotTimeInSeconds: 5,
-            pressure: 30,
-            notes: "almond milk",
-            grindSetting: "extra grinded",
-            machineId: machine1.id,
-            grinderId: grinder1.id,
-            beanId: bean1.id,
-        };
-        const createdEspresso = await prisma.espresso.create({ data: e1 });
-        const id = createdEspresso.id;
-    
-        // When
-        await EspressoService.deleteById(id);
-    
-        //  Then
-        const f = await prisma.espresso.findUnique({ where: { id } });
-        expect(f).toStrictEqual(null);
-        await prisma.machine.delete({ where: { id : machine1.id } });
-        await prisma.grinder.delete({ where: { id : grinder1.id } });
-        await prisma.bean.delete({ where: { id : bean1.id } });
-      });
+    // When
+    const foundEspresso = await EspressoService.getById(id);
 
-      test("create creates an espresso", async () => {
-        //Given 
-        const machine1 = await prisma.machine.create({ data: m1 });
-        const grinder1 = await prisma.grinder.create({ data: g1 });
-        const bean1 = await prisma.bean.create({ data: b1 });
-        const e1: CreateEspressoInput = {
-            beansWeight: 10, 
-            shotTimeInSeconds: 5,
-            pressure: 30,
-            notes: "almond milk",
-            grindSetting: "extra grinded",
-            machineId: machine1.id,
-            grinderId: grinder1.id,
-            beanId: bean1.id,
-        };
+    //  Then
+    expect(foundEspresso?.beansWeight).toStrictEqual(
+      createdEspresso.beansWeight
+    );
+    expect(foundEspresso?.grindSetting).toStrictEqual(
+      createdEspresso.grindSetting
+    );
+    expect(foundEspresso?.createdAt).toStrictEqual(createdEspresso.createdAt);
+    expect(foundEspresso?.notes).toStrictEqual(createdEspresso.notes);
+    expect(foundEspresso?.pressure).toStrictEqual(createdEspresso.pressure);
+    expect(foundEspresso?.machine).toStrictEqual(machine1);
+    expect(foundEspresso?.grinder).toStrictEqual(grinder1);
+    expect(foundEspresso?.beans).toStrictEqual(bean1);
 
-        // When
-        const createdEspresso = await EspressoService.create(e1);
-        const id = createdEspresso.id;
-    
-        //  Then
-        const f = await prisma.espresso.findUnique({ where: { id } });
-        expect(createdEspresso).toStrictEqual(f);
-        expect(createdEspresso.id).toBeDefined();
-        expect(createdEspresso.createdAt).toBeDefined();
-    
-        //  Cleanup
-        await prisma.espresso.delete({ where: { id } });
-        await prisma.machine.delete({ where: { id : machine1.id } });
-        await prisma.grinder.delete({ where: { id : grinder1.id } });
-        await prisma.bean.delete({ where: { id : bean1.id } });
-      });
+    //  Cleanup
+    await prisma.espresso.delete({ where: { id } });
+    await prisma.machine.delete({ where: { id: machine1.id } });
+    await prisma.grinder.delete({ where: { id: grinder1.id } });
+    await prisma.bean.delete({ where: { id: bean1.id } });
+  });
+
+  test("deleteById deletes a Espresso", async () => {
+    //  Given
+    const machine1 = await prisma.machine.create({ data: m1 });
+    const grinder1 = await prisma.grinder.create({ data: g1 });
+    const bean1 = await prisma.bean.create({ data: b1 });
+    const e1: CreateEspressoInput = {
+      beansWeight: 10,
+      shotTimeInSeconds: 5,
+      pressure: 30,
+      notes: "almond milk",
+      grindSetting: "extra grinded",
+      machineId: machine1.id,
+      grinderId: grinder1.id,
+      beanId: bean1.id,
+    };
+    const createdEspresso = await prisma.espresso.create({ data: e1 });
+    const id = createdEspresso.id;
+
+    // When
+    await EspressoService.deleteById(id);
+
+    //  Then
+    const f = await prisma.espresso.findUnique({ where: { id } });
+    expect(f).toStrictEqual(null);
+
+    // Cleanup
+    await prisma.machine.delete({ where: { id: machine1.id } });
+    await prisma.grinder.delete({ where: { id: grinder1.id } });
+    await prisma.bean.delete({ where: { id: bean1.id } });
+  });
+
+  test("create creates an espresso", async () => {
+    // Given
+    const machine1 = await prisma.machine.create({ data: m1 });
+    const grinder1 = await prisma.grinder.create({ data: g1 });
+    const bean1 = await prisma.bean.create({ data: b1 });
+    const e1: CreateEspressoInput = {
+      beansWeight: 10,
+      shotTimeInSeconds: 5,
+      pressure: 30,
+      notes: "almond milk",
+      grindSetting: "extra grinded",
+      machineId: machine1.id,
+      grinderId: grinder1.id,
+      beanId: bean1.id,
+    };
+
+    // When
+    const createdEspresso = await EspressoService.create(e1);
+    const id = createdEspresso.id;
+
+    //  Then
+    const f = await prisma.espresso.findUnique({ where: { id } });
+    expect(createdEspresso).toStrictEqual(f);
+    expect(createdEspresso.id).toBeDefined();
+    expect(createdEspresso.createdAt).toBeDefined();
+
+    //  Cleanup
+    await prisma.espresso.delete({ where: { id } });
+    await prisma.machine.delete({ where: { id: machine1.id } });
+    await prisma.grinder.delete({ where: { id: grinder1.id } });
+    await prisma.bean.delete({ where: { id: bean1.id } });
+  });
 });

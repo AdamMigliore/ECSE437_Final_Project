@@ -1,7 +1,3 @@
-import CreateBeanInput from "./createBeanInput";
-import CreateGrinderInput from "./createGrinderInput";
-import CreateMachineInput from "./createMachineInput";
-
 export default interface CreateEspressoInput {
     beansWeight: number;
     shotTimeInSeconds: number;
