@@ -19,13 +19,10 @@ const createMachine = async (req: Request, res: Response) => {
 
 const deleteMachine = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   const deletedMachine = await MachineService.deleteById(Number(id));
-
   if (deletedMachine == null) {
     return res.status(400);
   }
-
   return res.send(deletedMachine);
 };
 
